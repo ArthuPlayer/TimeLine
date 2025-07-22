@@ -1,46 +1,98 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
 
-public class Movimento2D : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    public float velocidade = 5f;       // Velocidade de movimento horizontal
-    public float forcaPulo = 7f;        // Força do pulo
-    private Rigidbody2D rb;             // Referência ao Rigidbody2D
-    private bool noChao = false;        // Verifica se o jogador está no chão
+    [SerializeField] private float velocidade = 5f;
+    [SerializeField] private float forcaPulo = 5f;
+    [SerializeField] private float moveH;
+    [SerializeField] private bool noPiso = true;
 
-    public Transform checadorChao;      // Objeto filho que verifica o chão
-    public float raioChao = 0.2f;       // Raio de detecção do chão
-    public LayerMask camadaChao;        // Layer que define o que é chão
+    private Rigidbody2D rb;
+    private Animator animator;
+    private SpriteRenderer sprite;
 
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+
     }
 
+    // Update is called once per frame
     void Update()
     {
-        // === Movimento Horizontal ===
-        // Usa as teclas A (ou ←) para esquerda, D (ou →) para direita
-        float movimento = Input.GetAxisRaw("Horizontal"); // -1 (esquerda), 1 (direita), 0 (nenhum)
-        rb.velocity = new Vector2(movimento * velocidade, rb.velocity.y);
-
-        // === Checa se está tocando o chão ===
-        noChao = Physics2D.OverlapCircle(checadorChao.position, raioChao, camadaChao);
-
-        // === Pulo ===
-        // Usa a tecla espaço para pular, mas só se estiver no chão
-        if (Input.GetButtonDown("Jump") && noChao)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, forcaPulo);
-        }
+        Andar();
+        Pular();
     }
 
-    // (Opcional) Visualização no editor da área de detecção do chão
-    void OnDrawGizmosSelected()
+    private void Andar()
     {
-        if (checadorChao != null)
+        moveH = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(moveH * Time.deltaTime * velocidade, 0, 0);
+        AnimaAndar();
+    }
+
+    private void AnimaAndar()
+    {
+        if (moveH > 0)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(checadorChao.position, raioChao);
+            sprite.flipX = false;
+            animator.SetBool("Run", true);
+        }
+        else if (moveH < 0)
+        {
+            sprite.flipX = true;
+            animator.SetBool("Run", true);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
         }
     }
+
+    private void Pular()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && noPiso)
+        {
+            rb.AddForce(Vector2.up * forcaPulo, ForceMode2D.Impulse);
+            noPiso = false;
+            animator.SetBool("Piso", false);
+            animator.SetTrigger("Pulo");
+        }
+
+        if (rb.linearVelocity.y < 0)
+        {
+            animator.SetFloat("ValorPulo", rb.linearVelocity.y);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Piso"))
+        {
+            noPiso = true;
+            animator.SetBool("Piso", true);
+            animator.SetFloat("ValorPulo", 0);
+        }
+
+        
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Piso"))
+        {
+            noPiso = true;
+            animator.SetBool("Piso", true);
+            animator.SetFloat("ValorPulo", 0);
+        }
+    }
+
+    
 }
