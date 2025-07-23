@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2395086563674700649}
   - component: {fileID: 2689783292404922944}
   - component: {fileID: 834122257347897518}
-  - component: {fileID: 1521016251303036321}
   m_Layer: 0
   m_Name: CharacterSheet_7
   m_TagString: player
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2630610791804967540}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.02, y: -2.02, z: 0}
+  m_LocalPosition: {x: -7.02, y: 2.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,21 +191,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidade: 5
   forcaPulo: 5
-  moveH: 0
-  noPiso: 1
---- !u!114 &1521016251303036321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2630610791804967540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40494a1ef7127f243bacd11f4b655eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocidade: 5
-  forcaPulo: 5
-  moveH: 0
   noPiso: 1
