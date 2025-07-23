@@ -7,12 +7,13 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float velocidade = 5f;
     [SerializeField] private float forcaPulo = 5f;
-    [SerializeField] private float moveH;
     [SerializeField] private bool noPiso = true;
 
+    private float moveH;
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer sprite;
+    private SpriteRenderer spriteRenderer;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,7 +22,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -36,6 +37,15 @@ public class Player : MonoBehaviour
         moveH = Input.GetAxis("Horizontal");
         transform.position += new Vector3(moveH * Time.deltaTime * velocidade, 0, 0);
         AnimaAndar();
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
     private void AnimaAndar()
@@ -65,11 +75,6 @@ public class Player : MonoBehaviour
             animator.SetBool("Piso", false);
             animator.SetTrigger("Pulo");
         }
-
-        if (rb.linearVelocity.y < 0)
-        {
-            animator.SetFloat("ValorPulo", rb.linearVelocity.y);
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -77,21 +82,9 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Piso"))
         {
             noPiso = true;
-            animator.SetBool("Piso", true);
-            animator.SetFloat("ValorPulo", 0);
         }
 
         
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Piso"))
-        {
-            noPiso = true;
-            animator.SetBool("Piso", true);
-            animator.SetFloat("ValorPulo", 0);
-        }
     }
 
     
