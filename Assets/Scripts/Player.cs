@@ -36,15 +36,17 @@ public class Player : MonoBehaviour
     {
         moveH = Input.GetAxis("Horizontal");
         transform.position += new Vector3(moveH * Time.deltaTime * velocidade, 0, 0);
-        AnimaAndar();
+        
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             spriteRenderer.flipX = true;
+            AnimaAndar();
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             spriteRenderer.flipX = false;
+            AnimaAndar();
         }
     }
 
@@ -53,16 +55,16 @@ public class Player : MonoBehaviour
         if (moveH > 0)
         {
             sprite.flipX = false;
-            animator.SetBool("Run", true);
+            animator.SetTrigger("Rum");
         }
         else if (moveH < 0)
         {
             sprite.flipX = true;
-            animator.SetBool("Run", true);
+            animator.SetTrigger("Rum");
         }
         else
         {
-            animator.SetBool("Run", false);
+            animator.SetTrigger("Rum");
         }
     }
 
