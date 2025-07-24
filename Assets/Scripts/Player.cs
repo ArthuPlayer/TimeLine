@@ -8,12 +8,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float velocidade = 5f;
     [SerializeField] private float forcaPulo = 5f;
     [SerializeField] private bool noPiso = true;
+    [SerializeField] private SistemaInterativo sInterativo;
 
     private float moveH;
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer sprite;
     private SpriteRenderer spriteRenderer;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,16 +57,16 @@ public class Player : MonoBehaviour
         if (moveH > 0)
         {
             sprite.flipX = false;
-            animator.SetTrigger("Rum");
+            animator.SetTrigger("Run");
         }
         else if (moveH < 0)
         {
             sprite.flipX = true;
-            animator.SetTrigger("Rum");
+            animator.SetTrigger("Run");
         }
         else
         {
-            animator.SetTrigger("Rum");
+            animator.SetTrigger("Run");
         }
     }
 
