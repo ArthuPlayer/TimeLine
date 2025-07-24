@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,14 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float velocidade = 5f;
     [SerializeField] private float forcaPulo = 5f;
     [SerializeField] private bool noPiso = true;
-    [SerializeField] private SistemaInterativo sInterativo;
 
     private float moveH;
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer sprite;
     private SpriteRenderer spriteRenderer;
-    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -64,10 +63,6 @@ public class Player : MonoBehaviour
             sprite.flipX = true;
             animator.SetTrigger("Run");
         }
-        else
-        {
-            animator.SetTrigger("Run");
-        }
     }
 
     private void Pular()
@@ -78,6 +73,7 @@ public class Player : MonoBehaviour
             noPiso = false;
             animator.SetBool("Piso", false);
             animator.SetTrigger("Pulo");
+            noPiso = true;
         }
     }
 
@@ -91,5 +87,8 @@ public class Player : MonoBehaviour
         
     }
 
-    
+    internal void Hit()
+    {
+        throw new NotImplementedException();
+    }
 }
