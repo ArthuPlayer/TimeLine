@@ -56,16 +56,12 @@ public class Player : MonoBehaviour
         if (moveH > 0)
         {
             sprite.flipX = false;
-            animator.SetTrigger("Rum");
+            animator.SetTrigger("Run");
         }
         else if (moveH < 0)
         {
             sprite.flipX = true;
-            animator.SetTrigger("Rum");
-        }
-        else
-        {
-            animator.SetTrigger("Rum");
+            animator.SetTrigger("Run");
         }
     }
 
@@ -77,6 +73,7 @@ public class Player : MonoBehaviour
             noPiso = false;
             animator.SetBool("Piso", false);
             animator.SetTrigger("Pulo");
+            noPiso = true;
         }
     }
 
