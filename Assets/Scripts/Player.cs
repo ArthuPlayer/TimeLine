@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -89,5 +90,8 @@ public class Player : MonoBehaviour
         
     }
 
-    
+    internal void Hit()
+    {
+        throw new NotImplementedException();
+    }
 }
